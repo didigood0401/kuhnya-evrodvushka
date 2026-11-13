@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Кухня в евродвушке · 3D-проект</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#efece6;--ink:#1c2129;--ink2:#5d6573;--line:#d9d3c8;--card:#fbfaf7;--acc:#2f6f5e;--warn:#c4661b;--glass:rgba(251,250,247,.82)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font:15px/1.5 Onest,system-ui,sans-serif}
+body{overflow-x:hidden}
+.k{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+#stage{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:radial-gradient(120% 90% at 50% 30%,#f7f5f1,#e4dfd6)}
+#c{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#c:active{cursor:grabbing}
+#labels{position:absolute;inset:0;pointer-events:none}
+.top{position:absolute;left:20px;top:20px;right:20px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;pointer-events:none;z-index:5}
+.ttl{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.7);border-radius:18px;padding:16px 20px;max-width:440px;pointer-events:auto;box-shadow:0 12px 40px -18px rgba(30,30,30,.35)}
+.ttl h1{font-size:clamp(20px,2.2vw,28px);line-height:1.12;letter-spacing:-.02em;margin:6px 0 6px}
+.ttl p{color:var(--ink2);font-size:14px}
+.mini{display:flex;gap:8px;pointer-events:auto}
+.mini span{background:var(--glass);backdrop-filter:blur(14px);border-radius:999px;padding:8px 14px;font:500 12px "IBM Plex Mono",monospace;border:1px solid rgba(255,255,255,.7)}
+.bar{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:5;display:flex;gap:6px;align-items:center;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.75);border-radius:20px;padding:6px;box-shadow:0 18px 50px -20px rgba(20,20,20,.45);max-width:calc(100% - 24px);overflow-x:auto;scrollbar-width:none}
+.bar::-webkit-scrollbar{display:none}
+.grp{display:flex;gap:4px;padding:0 4px;border-right:1px solid var(--line)}
+.grp:last-child{border:0}
+.b{height:40px;padding:0 14px;border-radius:14px;border:0;background:transparent;font:500 14px Onest;color:var(--ink);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px;transition:background .2s,color .2s,transform .15s}
+.b:hover{background:rgba(0,0,0,.05)}
+.b:active{transform:scale(.96)}
+.b.on{background:var(--ink);color:#fff}
+.b i{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.15);display:block;position:relative;overflow:hidden}
+.b i::after{content:"";position:absolute;right:0;top:0;bottom:0;width:50%;background:var(--t)}
+.info{position:absolute;right:20px;top:50%;transform:translate(24px,-50%);opacity:0;pointer-events:none;width:300px;z-index:6;background:var(--card);border-radius:18px;padding:18px;box-shadow:0 24px 60px -20px rgba(20,20,20,.45);transition:opacity .35s,transform .45s cubic-bezier(.2,.7,.2,1)}
+.info.on{opacity:1;transform:translate(0,-50%);pointer-events:auto}
+.info .n{width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:600 13px "IBM Plex Mono"}
+.info.w .n{background:var(--warn)}
+.info h3{font-size:18px;margin:10px 0 6px;letter-spacing:-.01em}
+.info p{font-size:14px;color:var(--ink2)}
+.info ul{margin:10px 0 0 16px;font-size:13px;color:var(--ink2)}
+.info .x{position:absolute;right:12px;top:12px;width:30px;height:30px;border-radius:50%;border:0;background:#efece6;cursor:pointer;font-size:14px}
+.pin{pointer-events:auto;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font:600 12px "IBM Plex Mono";display:grid;place-items:center;cursor:pointer;box-shadow:0 0 0 5px rgba(255,255,255,.55),0 6px 16px rgba(0,0,0,.3);transition:transform .25s,background .2s,opacity .3s}
+.pin:hover{transform:scale(1.15)}
+.pin.w{background:var(--warn);animation:pl 2s infinite}
+@keyframes pl{0%{box-shadow:0 0 0 5px rgba(255,255,255,.55),0 0 0 5px rgba(196,102,27,.5)}100%{box-shadow:0 0 0 5px rgba(255,255,255,.55),0 0 0 22px rgba(196,102,27,0)}}
+.pins-off .pin{opacity:0;pointer-events:none}
+.dim{font:500 12px "IBM Plex Mono",monospace;background:#1c2129;color:#fff;padding:3px 8px;border-radius:6px;white-space:nowrap;opacity:0;transition:opacity .3s}
+.dims-on .dim{opacity:1}
+.load{position:absolute;inset:0;display:grid;place-items:center;z-index:9;background:var(--bg);transition:opacity .6s}
+.load.done{opacity:0;pointer-events:none}
+.load div{font:500 12px "IBM Plex Mono";letter-spacing:.1em;color:var(--ink2)}
+.load b{display:block;width:180px;height:2px;background:var(--line);margin-top:12px;overflow:hidden;position:relative}
+.load b::after{content:"";position:absolute;inset:0;width:40%;background:var(--ink);animation:ld 1s infinite ease-in-out}
+@keyframes ld{from{transform:translateX(-100%)}to{transform:translateX(260%)}}
+.hint{position:absolute;left:20px;bottom:84px;z-index:4;font-size:12px;color:var(--ink2);background:var(--glass);padding:6px 10px;border-radius:10px;transition:opacity .6s}
+section{padding:72px 20px;max-width:1120px;margin:0 auto}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.c b{display:block;font-size:16px;margin-bottom:6px}
+.c p{color:var(--ink2);font-size:14px}
+h2{font-size:clamp(24px,3vw,36px);letter-spacing:-.02em;line-height:1.1}
+.tech{display:grid;grid-template-columns:repeat(2,1fr);gap:0 28px;margin-top:22px}
+.tech div{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.tech span:last-child{color:var(--ink2);text-align:right}
+footer{padding:30px 20px 50px;text-align:center;color:var(--ink2);font-size:13px}
+@media(max-width:760px){
+  .top{left:12px;right:12px;top:12px}.mini{display:none}
+  .ttl{padding:12px 14px}.ttl p{display:none}
+  .bar{bottom:12px;border-radius:16px}.b{height:38px;padding:0 11px;font-size:13px}
+  .info{left:12px;right:12px;width:auto;top:auto;bottom:70px;transform:translateY(20px)}.info.on{transform:none}
+  .hint{display:none}
+  .g3,.tech{grid-template-columns:1fr}
+}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="c"></canvas>
+  <div id="labels"></div>
+  <div class="top">
+    <div class="ttl"><div class="k">Задание 15375 · премиум-вариант · 3D</div><h1>Кухня в зоне зала - объёмная модель по вашему чертежу</h1><p>Покрутите, приблизьте, откройте фасады. Техника - ваша, в реальных габаритах.</p></div>
+    <div class="mini"><span>h = 2759</span><span>стена 1624</span><span>ниша 592</span></div>
+  </div>
+  <div class="hint" id="hint">Тяните - вращение · колесо / щипок - приближение · точки - пояснения</div>
+  <div class="info" id="info"><button class="x" id="ix">✕</button><div class="n" id="iN">1</div><h3 id="iT"></h3><p id="iP"></p><ul id="iL"></ul></div>
+  <div class="bar">
+    <div class="grp" id="cams">
+      <button class="b on" data-cam="hall">Из зала</button><button class="b" data-cam="work">Рабочая зона</button><button class="b" data-cam="sens">Датчики</button><button class="b" data-cam="top">План</button>
+    </div>
+    <div class="grp" id="pal">
+      <button class="b on" data-p="0" title="Лён + дуб"><i style="background:#e8e2d6;--t:#b98e5e"></i>Лён</button>
+      <button class="b" data-p="1" title="Шалфей + бетон"><i style="background:#6f7d72;--t:#c9c6bf"></i>Шалфей</button>
+      <button class="b" data-p="2" title="Белый + графит"><i style="background:#f3f2ef;--t:#2b2e33"></i>Графит</button>
+      <button class="b" data-p="3" title="Орех + терракота"><i style="background:#7a5236;--t:#e7ddd0"></i>Орех</button>
+    </div>
+    <div class="grp">
+      <button class="b" id="open">Открыть фасады</button><button class="b" id="dims">Размеры</button><button class="b" id="eve">Вечер</button>
+    </div>
+  </div>
+  <div class="load" id="load"><div>Собираю кухню<b></b></div></div>
+</div>
+
+<section>
+  <div class="k">Что в модели</div>
+  <h2 style="margin-top:8px">Не картинка, а проект, который можно проверить</h2>
+  <div class="g3">
+    <div class="c"><b>Ваша техника в габаритах</b><p>Посудомойка, стиральная, холодильник LG, духовка BOS и варочная Gorenje стоят там, где им хватает места и коммуникаций.</p></div>
+    <div class="c"><b>Кухня выглядит как мебель</b><p>Со стороны зала - ровная линия фасадов и пенал до потолка. Вытяжка с угольным фильтром спрятана в навесной шкаф.</p></div>
+    <div class="c"><b>Доступ к датчикам</b><p>Ниша 592 - открытые полки сверху и распашной фасад со съёмной стенкой внизу. Точное место - по вашим координатам.</p></div>
+  </div>
+  <div class="tech">
+    <div><span>Варочная поверхность</span><span>Gorenje GI6401WSC, белая</span></div>
+    <div><span>Духовой шкаф</span><span>BOS6737E09WG, белый, под варочной</span></div>
+    <div><span>Мойка</span><span>50 × 45, чёрная</span></div>
+    <div><span>Посудомоечная машина</span><span>Gorenje GS541D10W, под столешницей</span></div>
+    <div><span>Стиральная машина</span><span>LG TW4V3RS6W, под рабочей зоной</span></div>
+    <div><span>Холодильник</span><span>LG GC-B509ANPW, в пенале</span></div>
+    <div><span>Вытяжка</span><span>с угольным фильтром, встроена в шкаф</span></div>
+    <div><span>Микроволновка</span><span>встраиваемая, в колонне на уровне глаз</span></div>
+  </div>
+</section>
+<footer>Эскизная 3D-модель для обсуждения. Размеры модулей уточняются по замеру и паспортам техники.</footer>
+
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
+import {CSS2DRenderer,CSS2DObject} from 'three/addons/renderers/CSS2DRenderer.js';
+import {RectAreaLightUniformsLib} from 'three/addons/lights/RectAreaLightUniformsLib.js';
+
+const stage=document.getElementById('stage'),cv=document.getElementById('c');
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,powerPreference:'high-performance'});
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.outputColorSpace=THREE.SRGBColorSpace;
+R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.05;
+R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+const L2=new CSS2DRenderer({element:document.getElementById('labels')});
+const S=new THREE.Scene();const BG=new THREE.Color('#ebe7e0'),BG2=new THREE.Color('#25262b');S.background=BG.clone();S.fog=new THREE.Fog('#ebe7e0',9,16);
+const pm=new THREE.PMREMGenerator(R);S.environment=pm.fromScene(new RoomEnvironment(),.04).texture;
+const cam=new THREE.PerspectiveCamera(40,1,.05,60);
+const ctl=new OrbitControls(cam,cv);ctl.enableDamping=true;ctl.dampingFactor=.07;ctl.maxPolarAngle=Math.PI*.495;ctl.minDistance=1.2;ctl.maxDistance=11;
+RectAreaLightUniformsLib.init();
+const ANI=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- procedural textures ---------- */
+function canvasTex(w,h,draw,rep=[1,1],srgb=true){const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');draw(x,w,h);const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(...rep);if(srgb)t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;return t}
+const rnd=(a,b)=>a+Math.random()*(b-a);
+function woodDraw(base,dark,light,planks){return (x,w,h)=>{x.fillStyle=base;x.fillRect(0,0,w,h);
+  const ph=h/planks;
+  for(let p=0;p<planks;p++){const y0=p*ph;const tone=rnd(-14,14);x.fillStyle=`rgba(${tone>0?'255,240,220':'40,25,10'},${Math.abs(tone)/140})`;x.fillRect(0,y0,w,ph);
+    for(let i=0;i<70;i++){x.strokeStyle=Math.random()<.5?dark:light;x.globalAlpha=rnd(.05,.22);x.lineWidth=rnd(.6,2.4);x.beginPath();let yy=y0+rnd(0,ph);x.moveTo(0,yy);
+      for(let xx=0;xx<=w;xx+=24){yy+=rnd(-1.2,1.2);x.lineTo(xx,Math.min(y0+ph-1,Math.max(y0+1,yy)))}x.stroke()}
+    x.globalAlpha=1;if(planks>1){x.fillStyle='rgba(30,20,10,.35)';x.fillRect(0,y0,w,1.5);const off=rnd(0,w);x.fillRect(off,y0,1.5,ph)}}
+  x.globalAlpha=1}}
+const T={
+  floor:canvasTex(1024,1024,woodDraw('#c9a982','#8a6440','#e7d0ae',8),[2.2,2.2]),
+  oak:canvasTex(1024,256,woodDraw('#b98e5e','#7a5532','#dcb88a',1),[1,1]),
+  conc:canvasTex(512,512,(x,w,h)=>{x.fillStyle='#c9c6bf';x.fillRect(0,0,w,h);for(let i=0;i<9000;i++){x.fillStyle=`rgba(${Math.random()<.5?'255,255,255':'60,60,60'},${rnd(.02,.09)})`;x.fillRect(rnd(0,w),rnd(0,h),rnd(1,4),rnd(1,4))}},[1,1]),
+  walnut:canvasTex(1024,1024,woodDraw('#7a5236','#4a2f1c','#9c6f4c',1),[1,1]),
+  tile:canvasTex(1024,512,(x,w,h)=>{const tw=w/12,th=h/12;x.fillStyle='#d8d2c7';x.fillRect(0,0,w,h);
+    for(let r=0;r<12;r++)for(let c=0;c<12;c++){const l=rnd(232,246);x.fillStyle=`rgb(${l},${l-3},${l-9})`;x.fillRect(c*tw+2,r*th+2,tw-4,th-4);
+      const g=x.createRadialGradient(c*tw+tw*.3,r*th+th*.3,1,c*tw+tw/2,r*th+th/2,tw*.7);g.addColorStop(0,'rgba(255,255,255,.25)');g.addColorStop(1,'rgba(0,0,0,.06)');x.fillStyle=g;x.fillRect(c*tw+2,r*th+2,tw-4,th-4)}},[1,1]),
+  plaster:canvasTex(512,512,(x,w,h)=>{x.fillStyle='#ece8e1';x.fillRect(0,0,w,h);for(let i=0;i<5000;i++){x.fillStyle=`rgba(${Math.random()<.5?'255,255,255':'120,110,100'},${rnd(.02,.05)})`;x.beginPath();x.arc(rnd(0,w),rnd(0,h),rnd(1,6),0,7);x.fill()}},[3,1.5])
+};
+const tileBump=canvasTex(1024,512,(x,w,h)=>{const tw=w/12,th=h/12;x.fillStyle='#000';x.fillRect(0,0,w,h);x.fillStyle='#fff';for(let r=0;r<12;r++)for(let c=0;c<12;c++)x.fillRect(c*tw+3,r*th+3,tw-6,th-6)},[1,1],false);
+
+/* ---------- materials ---------- */
+const M={
+  front:new THREE.MeshStandardMaterial({color:'#e8e2d6',roughness:.62,metalness:0}),
+  tall:new THREE.MeshStandardMaterial({color:'#e8e2d6',roughness:.6}),
+  top:new THREE.MeshStandardMaterial({map:T.oak,roughness:.48}),
+  carc:new THREE.MeshStandardMaterial({color:'#f1eee8',roughness:.75}),
+  plinth:new THREE.MeshStandardMaterial({color:'#2c2c2c',roughness:.6}),
+  handle:new THREE.MeshStandardMaterial({color:'#1b1b1d',roughness:.35,metalness:.8}),
+  white:new THREE.MeshStandardMaterial({color:'#f6f6f4',roughness:.28,metalness:.05}),
+  whiteGlass:new THREE.MeshPhysicalMaterial({color:'#f4f4f2',roughness:.08,clearcoat:1,clearcoatRoughness:.05}),
+  blackGlass:new THREE.MeshPhysicalMaterial({color:'#0e0f11',roughness:.06,clearcoat:1,clearcoatRoughness:.04,metalness:.1}),
+  steel:new THREE.MeshStandardMaterial({color:'#b9bcc0',roughness:.28,metalness:.85}),
+  silver:new THREE.MeshStandardMaterial({color:'#dfe2e5',roughness:.3,metalness:.45}),
+  sink:new THREE.MeshStandardMaterial({color:'#1d1e20',roughness:.55}),
+  floor:new THREE.MeshStandardMaterial({map:T.floor,roughness:.55}),
+  wall:new THREE.MeshStandardMaterial({map:T.plaster,roughness:.92}),
+  tile:new THREE.MeshStandardMaterial({map:T.tile,bumpMap:tileBump,bumpScale:-1.2,roughness:.25}),
+  shelf:new THREE.MeshStandardMaterial({map:T.oak,roughness:.55}),
+  warn:new THREE.MeshStandardMaterial({color:'#c4661b',emissive:'#c4661b',emissiveIntensity:.25,roughness:.5}),
+  led:new THREE.MeshBasicMaterial({color:'#fff1d6'}),
+  dark:new THREE.MeshStandardMaterial({color:'#25272b',roughness:.4})
+};
+const PAL=[
+  {front:'#e8e2d6',tall:'#e8e2d6',top:T.oak,frontMap:null,topColor:'#ffffff'},
+  {front:'#6f7d72',tall:'#e9e5dd',top:T.conc,frontMap:null,topColor:'#ffffff'},
+  {front:'#f3f2ef',tall:'#2b2e33',top:T.oak,frontMap:null,topColor:'#ffffff'},
+  {front:'#ffffff',tall:'#e7ddd0',top:T.conc,frontMap:T.walnut,topColor:'#ffffff'}
+];
+
+/* ---------- helpers ---------- */
+const rb=(w,h,d,r=.004)=>new RoundedBoxGeometry(w,h,d,3,Math.min(r,w/2,h/2,d/2));
+function mesh(g,m,x=0,y=0,z=0,p=S){const o=new THREE.Mesh(g,m);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;p.add(o);return o}
+function box(w,h,d,m,x,y,z,p=S,r=.004){return mesh(rb(w,h,d,r),m,x,y,z,p)}
+
+/* units: metres. world: x right, z from top wall (0) into room, y up */
+const H=2.759,PL=.1,BASE=.77,CT=.04,TOPY=PL+BASE+CT /*0.91*/,UP0=1.5,UP1=2.22,MEZ1=2.74,DEP=.6,GAP=.003;
+const fronts=[]; /* {pivot, type, axis, open} */
+const pins=[];
+
+/* room */
+mesh(new THREE.PlaneGeometry(9,9).rotateX(-Math.PI/2),M.floor,1.6,0,3.2).castShadow=false;
+function wall(x1,z1,x2,z2,t=.12){const L=Math.hypot(x2-x1,z2-z1),a=Math.atan2(z2-z1,x2-x1);const w=box(L+t,H,t,M.wall,(x1+x2)/2,H/2,(z1+z2)/2,S,.002);w.rotation.y=-a;
+  /* offset outward (walls drawn on inner line) */ const nx=Math.sin(a),nz=-Math.cos(a);w.position.x+=nx*t/2;w.position.z+=nz*t/2;return w}
+wall(0,0,1.624,0);wall(1.624,0,1.624,.366);wall(1.624,.366,2.216,.366);wall(2.216,.366,2.216,.692);wall(2.216,.692,2.509,.692);wall(2.509,.692,2.509,1.349);wall(2.509,1.349,3.602,1.349);
+wall(0,5.076,0,0);
+/* skirting */
+box(3.6,.06,.012,M.carc,1.8,.03,1.343);
+
+/* run group: local x along run, local z = outward normal, back at z=0 */
+const runT=new THREE.Group();S.add(runT);                         /* top wall, x 0..1.624 */
+const runL=new THREE.Group();runL.rotation.y=Math.PI/2;runL.position.set(0,0,4.0);S.add(runL); /* left wall, u = 4.0 - z */
+
+function hollow(run,u0,w,y0,h,d,shelves=1){const t=.016,c=u0+w/2;box(t,h,d,M.carc,u0+t/2+.001,y0+h/2,d/2,run,.002);box(t,h,d,M.carc,u0+w-t/2-.001,y0+h/2,d/2,run,.002);box(w-2*t,t,d,M.carc,c,y0+t/2,d/2,run,.002);box(w-2*t,t,d,M.carc,c,y0+h-t/2,d/2,run,.002);box(w-.004,h,.004,M.carc,c,y0+h/2,.002,run,.001);for(let i=1;i<=shelves;i++)box(w-2*t-.004,t,d-.03,M.carc,c,y0+h*i/(shelves+1),d/2-.01,run,.002)}
+function baseCarcass(run,u0,w,hasTop=true){hollow(run,u0,w,PL,BASE,DEP-.03,w>.3?1:0);box(w,PL-.01,.02,M.plinth,u0+w/2,(PL-.01)/2,DEP-.07,run,.002)}
+function handle(p,w,x,y,z,vert=false){const g=rb(vert?.012:w,vert?w:.012,.022,.004);const h=new THREE.Mesh(g,M.handle);h.position.set(x,y,z);h.castShadow=true;p.add(h);return h}
+/* door: hinge 'l' or 'r' in run-local coords */
+function door(run,u0,w,y0,h,hinge='l',mat=M.front,zf=DEP,hd=true){const pv=new THREE.Group();const hx=hinge==='l'?u0+GAP:u0+w-GAP;pv.position.set(hx,0,zf);run.add(pv);
+  const dw=w-2*GAP,dh=h-2*GAP;const d=box(dw,dh,.019,mat,(hinge==='l'?1:-1)*dw/2,y0+h/2,.0095,pv,.003);d.userData.front=true;
+  if(hd){const hy=y0>1?y0+GAP+.06:y0+h-.06;handle(pv,Math.min(.22,dw*.5),(hinge==='l'?1:-1)*(dw-.06-Math.min(.22,dw*.5)/2)*(0)+(hinge==='l'?1:-1)*dw*.5,hy,.03)}
+  fronts.push({o:pv,type:'door',dir:hinge==='l'?-1:1});return pv}
+function drawer(run,u0,w,y0,h,mat=M.front,depth=.5){const g=new THREE.Group();g.position.set(0,0,0);run.add(g);
+  box(w-2*GAP,h-2*GAP,.019,mat,u0+w/2,y0+h/2,DEP+.0095,g,.003).userData.front=true;
+  /* drawer box */ const bw=w-.06;box(bw,h*.6,.012,M.carc,u0+w/2,y0+h*.35,DEP-depth,g,.002);box(.012,h*.6,depth,M.carc,u0+.03+.006,y0+h*.35,DEP-depth/2,g,.002);box(.012,h*.6,depth,M.carc,u0+w-.036,y0+h*.35,DEP-depth/2,g,.002);
+  box(bw,.01,depth,M.carc,u0+w/2,y0+.04,DEP-depth/2,g,.002);
+  handle(g,Math.min(.3,w*.55),u0+w/2,y0+h-.05,DEP+.03);
+  fronts.push({o:g,type:'drawer'});return g}
+function upper(run,u0,w,y0,h,hinge='l',deep=.32){hollow(run,u0,w,y0,h,deep,1);return door(run,u0,w,y0,h,hinge,M.front,deep,false)}
+function pin(n,pos,warn=false){const el=document.createElement('div');el.className='pin'+(warn?' w':'');el.textContent=n;const o=new CSS2DObject(el);o.position.copy(pos);S.add(o);el.addEventListener('pointerdown',e=>{e.stopPropagation();showInfo(n)});pins.push(o);return o}
+function dimLabel(txt,pos){const el=document.createElement('div');el.className='dim';el.textContent=txt;const o=new CSS2DObject(el);o.position.copy(pos);S.add(o)}
+function dimLine(a,b){const g=new THREE.BufferGeometry().setFromPoints([a,b]);const l=new THREE.Line(g,new THREE.LineBasicMaterial({color:'#1c2129',transparent:true,opacity:0}));S.add(l);dimLines.push(l)}
+const dimLines=[];
+
+/* ================= TOP RUN (x 0..1.624) ================= */
+/* corner blind module 0..0.9 (visible 0.6..0.9) */
+baseCarcass(runT,0,.9);door(runT,.6,.3,PL,BASE,'r');
+/* sink module 0.9..1.5 */
+baseCarcass(runT,.9,.6);door(runT,.9,.3,PL,BASE,'l');door(runT,1.2,.3,PL,BASE,'r');
+/* end narrow pull-out 1.5..1.624 */
+baseCarcass(runT,1.5,.124);drawer(runT,1.5,.124,PL,BASE,M.front,.45);
+/* countertop top run */
+box(1.624,CT,DEP+.02,M.top,1.624/2,PL+BASE+CT/2,(DEP+.02)/2,runT,.003);
+/* sink 50x45 black */
+const sx=1.2,sz=.31;
+box(.5,.012,.45,M.sink,sx,TOPY+.002,sz,runT,.01);
+box(.42,.008,.37,M.dark,sx,TOPY+.006,sz,runT,.004);
+mesh(new THREE.CylinderGeometry(.025,.025,.004,24),M.handle,sx,TOPY+.011,sz,runT);
+/* faucet */
+{const c=new THREE.CatmullRomCurve3([new THREE.Vector3(0,0,0),new THREE.Vector3(0,.26,0),new THREE.Vector3(0,.34,.06),new THREE.Vector3(0,.3,.17)]);
+ const f=mesh(new THREE.TubeGeometry(c,40,.012,12),M.handle,sx,TOPY,.07,runT);mesh(new THREE.CylinderGeometry(.022,.024,.06,20),M.handle,sx,TOPY+.03,.07,runT)}
+/* backsplash tiles on top wall */
+box(1.624,UP0-TOPY,.008,M.tile,1.624/2,TOPY+(UP0-TOPY)/2,.004,runT,.001);
+/* uppers top run: 0..1.624 with corner */
+upper(runT,0,.6,UP0,UP1-UP0,'l');upper(runT,.6,.5,UP0,UP1-UP0,'l');upper(runT,1.1,.524,UP0,UP1-UP0,'r');
+/* mezzanine */
+hollow(runT,0,1.624,UP1,MEZ1-UP1,.32,0);
+door(runT,0,.54,UP1,MEZ1-UP1,'l',M.front,.32,false);door(runT,.54,.54,UP1,MEZ1-UP1,'l',M.front,.32,false);door(runT,1.08,.544,UP1,MEZ1-UP1,'r',M.front,.32,false);
+
+/* ================= SENSOR NICHE x 1.624..2.216 at z .366 ================= */
+const niche=new THREE.Group();niche.position.set(1.624,0,.366);S.add(niche);
+const ND=.234; /* depth to the line of facades z=.6 */
+/* low cabinet with removable back: door + sensors behind */
+{const t=.016;box(t,BASE,ND-.02,M.carc,t/2,PL+BASE/2,(ND-.02)/2,niche,.002);box(t,BASE,ND-.02,M.carc,.592-t/2,PL+BASE/2,(ND-.02)/2,niche,.002);box(.56,t,ND-.02,M.carc,.296,PL+t/2,(ND-.02)/2,niche,.002)}box(.592,PL-.01,.02,M.plinth,.296,(PL-.01)/2,ND-.06,niche,.002);
+door(niche,0,.592,PL,BASE,'r',M.front,ND);
+/* sensors (meters) on wall */
+for(const [x,y] of [[.18,.42],[.4,.42]]){const g=new THREE.Group();g.position.set(x,y,.05);niche.add(g);
+  mesh(new THREE.CylinderGeometry(.045,.045,.05,24).rotateX(Math.PI/2),M.warn,0,0,.0,g);mesh(new THREE.CylinderGeometry(.035,.035,.006,24).rotateX(Math.PI/2),M.whiteGlass,0,0,.028,g);
+  mesh(new THREE.CylinderGeometry(.012,.012,.5,12),M.steel,0,-.0,-.01,g).rotation.z=Math.PI/2}
+/* worktop over niche */
+box(.592,CT,ND,M.top,.296,PL+BASE+CT/2,ND/2,niche,.003);
+/* open shelves above */
+for(const y of [1.25,1.62,1.99,2.36]) box(.592,.025,.22,M.shelf,.296,y,.11,niche,.004);
+box(.02,MEZ1-TOPY,.22,M.carc,.01,(TOPY+MEZ1)/2,.11,niche,.002);box(.02,MEZ1-TOPY,.22,M.carc,.582,(TOPY+MEZ1)/2,.11,niche,.002);
+/* decor */
+mesh(new THREE.CylinderGeometry(.05,.04,.16,24),new THREE.MeshStandardMaterial({color:'#8e9a86',roughness:.7}),.15,1.25+.0925,.1,niche);
+for(let i=0;i<4;i++)box(.025,rnd(.18,.24),.16,new THREE.MeshStandardMaterial({color:['#2f4858','#c4661b','#d9cdb8','#5d6b63'][i],roughness:.8}),.36+i*.03,1.62+.11,.1,niche,.002);
+mesh(new THREE.SphereGeometry(.06,24,16),new THREE.MeshStandardMaterial({color:'#e9e4da',roughness:.4}),.42,1.99+.072,.1,niche);
+
+/* ================= LEFT RUN (u = 4.0 - z) ================= */
+/* fridge pencil u 0..0.62 */
+box(.02,H-.02,DEP+.02,M.tall,.01,(H-.02)/2,(DEP+.02)/2,runL,.003);box(.02,H-.02,DEP+.02,M.tall,.61,(H-.02)/2,(DEP+.02)/2,runL,.003);
+hollow(runL,.02,.58,2.03,H-2.04,DEP,0);door(runL,.02,.58,2.03,H-2.04,'l',M.tall,DEP+.0);
+/* LG fridge silver 595x682x2030 */
+{const f=new THREE.Group();f.position.set(.31,0,0);runL.add(f);box(.586,1.98,.6,M.silver,0,1.0,.3,f,.02);
+ const dl=box(.586,.68,.02,M.silver,0,.37,.61,f,.01);box(.586,1.27,.02,M.silver,0,1.36,.61,f,.01);
+ box(.016,.42,.03,M.steel,-.25,.86,.63,f,.006);box(.016,.42,.03,M.steel,-.25,1.12,.63,f,.006)}
+/* MW column u 0.62..1.22 */
+const MC0=.62;hollow(runL,MC0,.6,PL,1.1,DEP,2);box(.6,.4,DEP,M.carc,MC0+.3,1.4,DEP/2,runL,.002);hollow(runL,MC0,.6,1.62,H-1.63,DEP,2);box(.6,PL-.01,.02,M.plinth,MC0+.3,(PL-.01)/2,DEP-.07,runL,.002);
+door(runL,MC0,.6,PL,1.1,'r',M.tall);
+/* microwave built-in 1.2..1.58 */
+{box(.594,.38,.02,M.blackGlass,MC0+.3,1.4,DEP+.01,runL,.004);box(.4,.25,.004,new THREE.MeshPhysicalMaterial({color:'#1a1c1f',roughness:.05,transmission:0,clearcoat:1}),MC0+.26,1.4,DEP+.022,runL,.002);box(.012,.22,.02,M.steel,MC0+.5,1.4,DEP+.03,runL,.004)}
+door(runL,MC0,.6,1.62,H-1.62-.01,'r',M.tall);
+/* side panel between column and worktop */
+box(.02,H-.01,DEP+.02,M.tall,MC0+.61,(H-.01)/2,(DEP+.02)/2,runL,.003);
+/* drawers u 1.23..1.63 */
+const D0=1.23;baseCarcass(runL,D0,.4);drawer(runL,D0,.4,PL,.17);drawer(runL,D0,.4,PL+.17,.3);drawer(runL,D0,.4,PL+.47,.3);
+/* hob+oven u 1.63..2.23 */
+const O0=1.63;baseCarcass(runL,O0,.6);drawer(runL,O0,.6,PL,.14,M.front,.45);
+{const ov=new THREE.Group();ov.position.set(O0+.3,PL+.14,DEP);runL.add(ov);
+ box(.594,.595,.025,M.white,0,.2975,.0125,ov,.006);box(.5,.36,.006,M.blackGlass,0,.27,.027,ov,.01);box(.5,.03,.03,M.steel,0,.5,.045,ov,.01);
+ box(.594,.07,.004,M.blackGlass,0,.555,.026,ov,.002);
+ for(const x of[-.22,.22])mesh(new THREE.CylinderGeometry(.016,.016,.02,20).rotateX(Math.PI/2),M.steel,x,.555,.035,ov)}
+/* washer u 2.23..2.83 : open under worktop */
+const W0=2.23;box(.02,BASE+PL,DEP,M.carc,W0+.01,(BASE+PL)/2,DEP/2,runL,.002);
+{const w=new THREE.Group();w.position.set(W0+.31,0,0);runL.add(w);box(.596,.85,.56,M.white,0,.425+.01,.29,w,.02);
+ const ring=mesh(new THREE.TorusGeometry(.17,.03,16,48),M.blackGlass,0,.45,.575,w);mesh(new THREE.CircleGeometry(.15,48),new THREE.MeshPhysicalMaterial({color:'#2b3238',roughness:.05,clearcoat:1,transparent:true,opacity:.85}),0,.45,.582,w);
+ box(.596,.12,.01,M.white,0,.76,.574,w,.003);box(.18,.04,.004,M.blackGlass,.12,.77,.58,w,.002);mesh(new THREE.CylinderGeometry(.03,.03,.02,24).rotateX(Math.PI/2),M.steel,-.16,.77,.585,w)}
+/* dishwasher u 2.83..3.43 (freestanding, top removed) */
+const P0=2.83;
+{const dw=new THREE.Group();dw.position.set(P0+.3,0,0);runL.add(dw);box(.596,.82,.58,M.white,0,.42,.29,dw,.012);box(.596,.1,.01,M.white,0,.77,.585,dw,.003);
+ box(.2,.03,.004,M.blackGlass,-.12,.78,.592,dw,.002);box(.25,.02,.03,M.steel,0,.7,.6,dw,.006)}
+/* corner to top run: u 3.43..3.4? left run reaches z=0.57 -> u up to 3.4 + countertop to wall */
+/* countertop left run u 1.23..3.4 (z 2.77..0.6) */
+box(3.4-D0,CT,DEP+.02,M.top,D0+(3.4-D0)/2,PL+BASE+CT/2,(DEP+.02)/2,runL,.003);
+/* hob on countertop */
+{const hb=new THREE.Group();hb.position.set(O0+.3,TOPY,.3);runL.add(hb);box(.59,.006,.52,M.whiteGlass,0,.003,0,hb,.004);
+ for(const [x,z,r] of[[-.15,-.12,.09],[.15,-.12,.075],[-.15,.12,.075],[.15,.12,.09]]){const m=mesh(new THREE.RingGeometry(r-.004,r,48).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({color:'#9a9a9a'}),x,.0065,z,hb);m.castShadow=false}
+ box(.2,.002,.03,M.blackGlass,0,.007,.23,hb,.001)}
+/* backsplash left wall */
+box(3.4-D0,UP0-TOPY,.008,M.tile,D0+(3.4-D0)/2,TOPY+(UP0-TOPY)/2,.004,runL,.001);
+/* uppers left run u 1.23..3.4 (hood cabinet over hob) */
+upper(runL,D0,.4,UP0,UP1-UP0,'l');
+/* hood cabinet: lower part = hood strip */
+{hollow(runL,O0,.6,UP0+.05,UP1-UP0-.05,.32,1);box(.596,.05,.32,M.steel,O0+.3,UP0+.025,.16,runL,.004);door(runL,O0,.6,UP0+.06,UP1-UP0-.06,'l',M.front,.32,false)}
+upper(runL,W0,.6,UP0,UP1-UP0,'l');upper(runL,P0,.57,UP0,UP1-UP0,'r');
+hollow(runL,D0,3.4-D0,UP1,MEZ1-UP1,.32,0);
+for(let u=D0;u<3.39;u+=.5425)door(runL,u,.5425,UP1,MEZ1-UP1,'l',M.front,.32,false);
+/* LED strip under uppers both runs */
+const leds=[];
+function led(run,u0,w){const m=box(w,.006,.012,M.led,u0+w/2,UP0-.004,.29,run,.001);m.castShadow=false;leds.push(m);
+  const ra=new THREE.RectAreaLight('#ffd9a8',0,w,.04);ra.position.set(u0+w/2,UP0-.01,.27);ra.rotation.x=-Math.PI/2;run.add(ra);leds.push(ra)}
+led(runL,D0,3.4-D0);led(runT,0,1.624);
+/* decor on worktop */
+{const g=new THREE.Group();g.position.set(1.43,TOPY,.18);runL.add(g);
+ box(.36,.02,.24,M.shelf,0,.01,0,g,.006);mesh(new THREE.CylinderGeometry(.06,.05,.12,24),new THREE.MeshStandardMaterial({color:'#f2efe9',roughness:.3}),.22,.06,-.02,g);
+ const pot=mesh(new THREE.CylinderGeometry(.05,.04,.1,20),new THREE.MeshStandardMaterial({color:'#c4661b',roughness:.6}),-.2,.05,.0,g);
+ for(let i=0;i<7;i++){const l=mesh(new THREE.SphereGeometry(.03,10,8),new THREE.MeshStandardMaterial({color:'#5e7d4f',roughness:.8}),-.2+rnd(-.03,.03),.12+rnd(0,.06),rnd(-.03,.03),g);l.scale.set(1,.5,1.4)}}
+/* pendant lights over hall side? : hanging lamp near passage */
+{const lamp=new THREE.Group();lamp.position.set(2.45,0,3.55);S.add(lamp);mesh(new THREE.CylinderGeometry(.002,.002,.9,6),M.handle,0,H-.45,0,lamp);
+ const sh=mesh(new THREE.SphereGeometry(.14,32,16,0,Math.PI*2,0,Math.PI/2),new THREE.MeshStandardMaterial({color:'#1c2129',roughness:.5,side:THREE.DoubleSide}),0,H-.9,0,lamp);sh.rotation.x=0;
+ const bulb=mesh(new THREE.SphereGeometry(.035,16,12),new THREE.MeshBasicMaterial({color:'#fff3dc'}),0,H-.92,0,lamp);bulb.castShadow=false;
+ const pl=new THREE.PointLight('#ffcf94',0,6,1.6);pl.position.set(0,H-.98,0);lamp.add(pl);leds.push(pl)}
+/* dining hint: small table + chairs in hall zone */
+{const t=new THREE.Group();t.position.set(2.45,0,3.55);S.add(t);mesh(new THREE.CylinderGeometry(.45,.45,.03,48),M.top,0,.74,0,t);mesh(new THREE.CylinderGeometry(.03,.03,.72,16),M.handle,0,.37,0,t);mesh(new THREE.CylinderGeometry(.22,.24,.02,32),M.handle,0,.01,0,t);
+ for(const a of[0,2.1,4.2]){const c=new THREE.Group();c.position.set(Math.sin(a)*.62,0,Math.cos(a)*.62);c.rotation.y=a;t.add(c);box(.42,.04,.42,M.front,0,.46,0,c,.02);box(.42,.38,.03,M.front,0,.7,.2,c,.015);
+  for(const [x,z] of[[-.18,-.18],[.18,-.18],[-.18,.18],[.18,.18]])mesh(new THREE.CylinderGeometry(.012,.01,.45,8),M.handle,x,.225,z,c)}}
+
+/* ---------- lights ---------- */
+const hemi=new THREE.HemisphereLight('#fffaf2','#b8a68c',.55);S.add(hemi);
+const sun=new THREE.DirectionalLight('#fff3e2',2.2);sun.position.set(4.5,5.5,4.2);sun.target.position.set(1,0,1.5);S.add(sun,sun.target);
+sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-4,right:4,top:4,bottom:-4,near:1,far:16});sun.shadow.bias=-.0004;sun.shadow.normalBias=.02;sun.shadow.radius=4;
+const fill=new THREE.DirectionalLight('#dfe8ff',.5);fill.position.set(-2,3,6);S.add(fill);
+
+/* ---------- pins + dims ---------- */
+const W=(run,u,y,z)=>run.localToWorld(new THREE.Vector3(u,y,z));
+S.updateMatrixWorld(true);
+pin('1',W(runT,.75,PL+BASE*.55,DEP+.05));
+pin('2',W(runT,1.2,TOPY+.12,.32));
+pin('3',W(runL,P0+.3,.55,DEP+.06));
+pin('4',W(runL,W0+.31,.62,DEP+.06));
+pin('5',W(runL,O0+.3,TOPY+.1,.3));
+pin('6',W(runL,D0+.2,.6,DEP+.06));
+pin('7',W(runL,MC0+.3,1.4,DEP+.08));
+pin('8',W(runL,.31,1.4,DEP+.08));
+pin('!',new THREE.Vector3(1.92,.6,.64),true);
+const INFO={
+ '1':['Угловой модуль','Поворотные полки - кастрюли и крупная посуда. Фасад 300 у мойки, сам модуль уходит в угол.',['ширина 900, видимая часть 300']],
+ '2':['Мойка 50 × 45, чёрная','По центру стены 1624. Под ней - сортировка мусора и фильтр.',['слив рядом с посудомойкой','смеситель чёрный матовый']],
+ '3':['Посудомойка Gorenje GS541D10W','Отдельностоящая, без верхней крышки - заходит под столешницу. Рядом с мойкой: общий слив, короткие шланги.',['450 × 600 × 845 → под столешницу 910']],
+ '4':['Стиральная машина LG TW4V3RS6W','Под рабочей зоной. Столешница поднята до 910 мм, чтобы машина встала без зазоров. Можно закрыть фасадом.',['над ней - главная зона для нарезки']],
+ '5':['Варочная Gorenje + духовка BOS','Варочная белая в столешнице, духовой шкаф под ней, внизу ящик для противней. Над варочной - вытяжка с угольным фильтром в шкафу.',['вытяжка без воздуховода, короба нет']],
+ '6':['Ящики 400','Специи, масла, приборы - у плиты под рукой.',['3 ящика полного выдвижения']],
+ '7':['Колонна со встраиваемой СВЧ','Микроволновка на уровне глаз, ниже - шкаф для круп и бытовой химии, выше - антресоль.',['фасады до потолка, без пыльной полки']],
+ '8':['Холодильник LG в пенале','Остаётся отдельностоящим, но боковины и антресоль до потолка делают его встроенным на вид. Со стороны зала - ровная стена шкафов.',['595 × 682 × 2030 мм','зазоры для вентиляции 20-30 мм']],
+ '!':['Ниша 592 - доступ к датчикам','Датчики расхода воды не закрываем глухо: внизу распашной фасад со съёмной задней стенкой, сверху - открытые полки.',['откройте фасады - датчики видно','точное место - по вашим координатам'],true]
+};
+const info=document.getElementById('info');
+function showInfo(n){const d=INFO[n];if(!d)return;info.classList.toggle('w',!!d[3]);document.getElementById('iN').textContent=n;document.getElementById('iT').textContent=d[0];document.getElementById('iP').textContent=d[1];document.getElementById('iL').innerHTML=d[2].map(x=>`<li>${x}</li>`).join('');info.classList.add('on');
+  const p=pins.find(o=>o.element.textContent===n).position;go({p:p.clone().add(new THREE.Vector3(n==='!'?.2:1.6,.5,n==='!'?1.7:.9)).clone(),t:p.clone()},1.1)}
+document.getElementById('ix').onclick=()=>info.classList.remove('on');
+/* dims */
+dimLabel('1624',new THREE.Vector3(.812,2.84,.05));dimLine(new THREE.Vector3(0,2.8,.05),new THREE.Vector3(1.624,2.8,.05));
+dimLabel('592 · датчики',new THREE.Vector3(1.92,2.84,.42));dimLine(new THREE.Vector3(1.624,2.8,.42),new THREE.Vector3(2.216,2.8,.42));
+dimLabel('h = 2759',new THREE.Vector3(.02,1.4,4.6));dimLine(new THREE.Vector3(.02,0,4.6),new THREE.Vector3(.02,2.759,4.6));
+dimLabel('столешница 910',new THREE.Vector3(.7,TOPY+.04,2.9));
+dimLabel('≈ 3400 вдоль стены',new THREE.Vector3(.7,.03,2.3));dimLine(new THREE.Vector3(.68,.02,.6),new THREE.Vector3(.68,.02,4.0));
+dimLabel('проход ≥ 1000',new THREE.Vector3(1.1,.03,1.6));dimLine(new THREE.Vector3(.62,.02,1.6),new THREE.Vector3(1.62,.02,1.6));
+
+/* ---------- cameras ---------- */
+const CAMS={
+ hall:{p:new THREE.Vector3(4.4,2.05,5.0),t:new THREE.Vector3(.85,1.1,1.6)},
+ work:{p:new THREE.Vector3(2.1,1.75,3.3),t:new THREE.Vector3(.3,.85,1.7)},
+ sens:{p:new THREE.Vector3(2.3,1.25,2.2),t:new THREE.Vector3(1.85,.75,.45)},
+ top:{p:new THREE.Vector3(1.6,8.2,2.31),t:new THREE.Vector3(1.6,0,2.3)}
+};
+let tw=null;
+function go(c,dur=1.4){tw={p0:cam.position.clone(),t0:ctl.target.clone(),p1:c.p.clone(),t1:c.t.clone(),s:performance.now(),d:ANI?dur*1000:1}}
+document.querySelectorAll('#cams .b').forEach(b=>b.onclick=()=>{if(b.dataset.cam==='sens'&&!openT)openB.click();document.querySelectorAll('#cams .b').forEach(x=>x.classList.remove('on'));b.classList.add('on');info.classList.remove('on');go(CAMS[b.dataset.cam])});
+cam.position.set(6.5,3.6,7.5);ctl.target.copy(CAMS.hall.t);
+
+/* ---------- palette ---------- */
+function setPal(i){const p=PAL[i];M.front.color.set(p.front);M.front.map=p.frontMap;M.front.needsUpdate=true;M.tall.color.set(p.tall);M.top.map=p.top;M.top.needsUpdate=true;M.shelf.map=i===1?T.oak:p.top===T.oak?T.oak:T.oak}
+document.querySelectorAll('#pal .b').forEach(b=>b.onclick=()=>{document.querySelectorAll('#pal .b').forEach(x=>x.classList.remove('on'));b.classList.add('on');setPal(+b.dataset.p)});
+
+/* ---------- open / dims / evening ---------- */
+let openK=0,openT=0;const openB=document.getElementById('open');
+openB.onclick=()=>{openT=openT?0:1;openB.classList.toggle('on',!!openT);openB.textContent=openT?'Закрыть фасады':'Открыть фасады'};
+const dimsB=document.getElementById('dims');dimsB.onclick=()=>{const on=stage.classList.toggle('dims-on');dimsB.classList.toggle('on',on);dimLines.forEach(l=>l.material.opacity=on?.85:0)};
+let eveK=0,eveT=0;const eveB=document.getElementById('eve');eveB.onclick=()=>{eveT=eveT?0:1;eveB.classList.toggle('on',!!eveT)};
+fronts.forEach((f,i)=>{f.delay=(i%9)*.035});
+
+/* ---------- resize / loop ---------- */
+function rs(){const w=stage.clientWidth,h=stage.clientHeight;R.setSize(w,h,false);L2.setSize(w,h);cam.aspect=w/h;cam.fov=w<700?52:40;cam.updateProjectionMatrix()}
+addEventListener('resize',rs);rs();
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+ctl.addEventListener('start',()=>{tw=null;document.getElementById('hint').style.opacity=0});
+const clock=new THREE.Clock();let first=true;
+function loop(){const dt=Math.min(.05,clock.getDelta());
+  if(tw){const k=Math.min(1,(performance.now()-tw.s)/tw.d),e=ease(k);cam.position.lerpVectors(tw.p0,tw.p1,e);ctl.target.lerpVectors(tw.t0,tw.t1,e);if(k>=1)tw=null}
+  openK+=(openT-openK)*Math.min(1,dt*(ANI?4:60));
+  for(const f of fronts){const k=Math.max(0,Math.min(1,(openK-f.delay)/(1-.3)));const e=ease(k);
+    if(f.type==='door')f.o.rotation.y=f.dir*e*1.75;else f.o.position.z=e*.32}
+  eveK+=(eveT-eveK)*Math.min(1,dt*(ANI?3:60));
+  sun.intensity=2.2*(1-eveK*.95);hemi.intensity=.55*(1-eveK*.8);fill.intensity=.5*(1-eveK*.8);R.toneMappingExposure=1.05-eveK*.12;
+  if(Math.abs(eveK-(loop.lastE??-1))>.002){loop.lastE=eveK;S.traverse(o=>{if(o.isMesh&&o.material&&'envMapIntensity' in o.material)o.material.envMapIntensity=1-eveK*.82})}
+  for(const l of leds){if(l.isRectAreaLight)l.intensity=eveK*14;else if(l.isPointLight)l.intensity=eveK*3.2;else l.visible=eveK>.05}
+  S.background.copy(BG).lerp(BG2,eveK);S.fog.color.copy(S.background);
+  ctl.update();R.render(S,cam);L2.render(S,cam);
+  if(first){first=false;document.getElementById('load').classList.add('done');go(CAMS.hall,2.4)}
+  requestAnimationFrame(loop)}
+loop();
+setTimeout(()=>{document.getElementById('hint').style.opacity=0},9000);
+</script>
+</body>
+</html>

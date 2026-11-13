@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Кухня в евродвушке - набросок расстановки</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f1ec;--ink:#1d2430;--ink2:#5b6474;--line:#cfcac0;--card:#fbfaf7;--wall:#1d2430;
+  --f:#e9e4da;--fe:#c9bfae;--top:#8a7a66;--acc:#2f6f5e;--warn:#b3651d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 Onest,system-ui,sans-serif;overflow-x:hidden}
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px}
+header{padding:44px 0 18px;border-bottom:1px solid var(--line)}
+.k{font:500 12px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+h1{font-size:clamp(28px,4.4vw,46px);line-height:1.08;letter-spacing:-.02em;margin:10px 0 12px}
+.lead{color:var(--ink2);max-width:720px}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+h2{font-size:24px;letter-spacing:-.01em;margin-bottom:6px}
+.sub{color:var(--ink2);font-size:15px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:start}
+.grid>*{min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+svg{width:100%;height:auto;display:block}
+.leg{display:grid;gap:8px;font-size:14px}
+.leg div{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;padding:8px 0;border-bottom:1px dashed var(--line)}
+.leg b{font:500 12px "IBM Plex Mono",monospace;background:var(--ink);color:#fff;border-radius:4px;text-align:center;padding:2px 0}
+.leg .w b{background:var(--warn)}
+.sw{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 18px}
+.sw button{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px 6px 6px;font:14px Onest;cursor:pointer;color:var(--ink);transition:border-color .2s,transform .12s}
+.sw button:active{transform:scale(.97)}
+.sw button.on{border-color:var(--ink)}
+.sw i{width:22px;height:22px;border-radius:50%;border:1px solid rgba(0,0,0,.15)}
+.ev{overflow-x:auto}
+.ev svg{min-width:720px}
+.ev svg rect,.ev svg path{transition:fill .35s}
+ul.n{padding-left:18px;color:var(--ink2);font-size:15px}
+ul.n li{margin:6px 0}
+.tag{display:inline-block;font:500 12px "IBM Plex Mono",monospace;background:#fff3e4;color:var(--warn);border-radius:4px;padding:2px 6px}
+footer{padding:28px 0 50px;font-size:13px;color:var(--ink2)}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="k">Набросок · задание 15375 · бесплатно</div>
+  <h1>Кухня в зоне зала: Г-образная, техника не выпирает</h1>
+  <p class="lead">Первый вариант расстановки по вашему чертежу и списку техники. Это эскиз для обсуждения: после ваших правок и точных координат датчиков сделаю финальные развёртки с размерами модулей и 3D.</p>
+</div></header>
+
+<section><div class="wrap grid">
+  <div class="card">
+    <svg viewBox="-260 -200 4300 3700" aria-label="План кухонной зоны">
+      <defs><pattern id="h" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="40" stroke="#b3651d" stroke-width="10" opacity=".35"/></pattern></defs>
+      <!-- walls -->
+      <path d="M0 3200 L0 0 L1624 0 L1624 366 L2216 366 L2216 692 L2509 692 L2509 1349 L3602 1349" fill="none" stroke="#1d2430" stroke-width="60" stroke-linejoin="miter"/>
+      <!-- sensors wall -->
+      <rect x="1624" y="366" width="592" height="70" fill="url(#h)"/>
+      <!-- top run -->
+      <g font-family="IBM Plex Mono" font-size="92" text-anchor="middle">
+        <rect class="pf" x="30" y="30" width="570" height="570" fill="#e9e4da" stroke="#1d2430" stroke-width="8"/><text x="315" y="340">1</text>
+        <rect class="pf" x="600" y="30" width="600" height="570" fill="#e9e4da" stroke="#1d2430" stroke-width="8"/>
+        <rect x="725" y="110" width="350" height="315" rx="40" fill="#2a2f38"/><text x="900" y="530">2</text>
+        <rect class="pf" x="1200" y="30" width="424" height="570" fill="#e9e4da" stroke="#1d2430" stroke-width="8"/><text x="1412" y="340">3</text>
+        <!-- left run -->
+        <rect class="pf" x="30" y="600" width="570" height="600" fill="#e9e4da" stroke="#1d2430" stroke-width="8"/><text x="315" y="930">4</text>
+        <rect class="pf" x="30" y="1200" width="570" height="600" fill="#e9e4da" stroke="#1d2430" stroke-width="8"/><text x="315" y="1530">5</text>
+        <rect class="pf" x="30" y="1800" width="570" height="600" fill="#e9e4da" stroke="#1d2430" stroke-width="8"/>
+        <g fill="none" stroke="#2a2f38" stroke-width="14"><circle cx="190" cy="1960" r="90"/><circle cx="420" cy="1960" r="70"/><circle cx="190" cy="2240" r="70"/><circle cx="420" cy="2240" r="90"/></g>
+        <text x="315" y="2135">6</text>
+        <rect class="pf" x="30" y="2400" width="570" height="400" fill="#e9e4da" stroke="#1d2430" stroke-width="8"/><text x="315" y="2630">7</text>
+        <rect class="pt" x="30" y="2800" width="600" height="600" fill="#c9bfae" stroke="#1d2430" stroke-width="8"/><text x="330" y="3120">8</text>
+      </g>
+      <!-- fridge (beyond, next) -->
+      <g font-family="IBM Plex Mono" font-size="92" text-anchor="middle">
+        <rect x="660" y="2810" width="0" height="0"/>
+      </g>
+      <!-- dims -->
+      <g font-family="IBM Plex Mono" font-size="80" fill="#5b6474" text-anchor="middle">
+        <line x1="0" y1="-110" x2="1624" y2="-110" stroke="#5b6474" stroke-width="6"/><text x="812" y="-140">1624</text>
+        <line x1="1624" y1="250" x2="2216" y2="250" stroke="#5b6474" stroke-width="6"/><text x="2020" y="300" font-size="66">592 · датчики</text>
+        <text x="3050" y="1290">1093</text>
+        <line x1="-150" y1="0" x2="-150" y2="3400" stroke="#5b6474" stroke-width="6"/><text x="-190" y="1700" transform="rotate(-90 -190 1700)">кухня вдоль стены ≈ 3400</text>
+      </g>
+      <!-- zone -->
+      <text x="1900" y="2300" font-family="Onest" font-size="120" fill="#5b6474" text-anchor="middle">зона зала</text>
+      <path d="M800 900 L1500 900" stroke="#2f6f5e" stroke-width="14" stroke-dasharray="40 30"/>
+      <text x="1150" y="860" font-family="Onest" font-size="78" fill="#2f6f5e" text-anchor="middle">проход ≥ 1000</text>
+    </svg>
+  </div>
+  <div>
+    <h2>Что где стоит</h2>
+    <p class="sub">Г-образная кухня: короткая сторона по стене 1624, длинная - вдоль левой стены. Высокие колонны в конце, чтобы со стороны зала кухня читалась как шкаф, а не как ряд техники.</p>
+    <div class="leg">
+      <div><b>1</b><span>Угловой модуль с поворотными полками - кастрюли и крупная посуда.</span></div>
+      <div><b>2</b><span>Мойка 50 × 45 черная, под ней сортировка мусора и фильтр.</span></div>
+      <div><b>3</b><span>Модуль 400 - выдвижные ящики под приборы, сушка над ним. Торец закрыт боковой панелью.</span></div>
+      <div><b>4</b><span>Посудомойка Gorenje GS541D10W - отдельностоящая, ставится под столешницу со снятой крышкой; рядом с мойкой через угол, общий слив.</span></div>
+      <div><b>5</b><span>Стиральная машина LG - под столешницей, сверху рабочая зона для нарезки. Столешница поднята до 910 мм, чтобы машина встала без зазоров.</span></div>
+      <div><b>6</b><span>Варочная Gorenje + духовой шкаф BOS под ней. Над варочной - вытяжка с угольным фильтром (без воздуховода), встроена в навесной шкаф.</span></div>
+      <div><b>7</b><span>Ящики 400 - специи, масла, у плиты.</span></div>
+      <div><b>8</b><span>Колонна: встраиваемая СВЧ на уровне глаз + шкаф. Рядом холодильник LG в пенале с боковыми панелями - выглядит встроенным, при этом остаётся отдельностоящим.</span></div>
+      <div class="w"><b>!</b><span>Стенка 592 с датчиками воды - не закрываем глухо: открытая полка или фасад-распашка со съёмной задней стенкой. Точное место сделаю по вашим координатам.</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Развёртка левой стены</h2>
+  <p class="sub">Фасады в цвете, нажмите на сочетание. Навесные до потолка (2759): нижний ряд 720 + антресоли, чтобы не собиралась пыль сверху.</p>
+  <div class="sw" id="sw">
+    <button class="on" data-f="#e9e4da" data-t="#c9bfae" data-c="#8a7a66"><i style="background:#e9e4da"></i>Светлый лён + дуб</button>
+    <button data-f="#5d6b63" data-t="#e7e2d8" data-c="#3b3f45"><i style="background:#5d6b63"></i>Шалфей + бетон</button>
+    <button data-f="#f4f3f0" data-t="#2a2d33" data-c="#a58a6a"><i style="background:#2a2d33"></i>Белый низ, графит пеналы</button>
+  </div>
+  <div class="card ev">
+    <svg viewBox="-80 -140 4000 3050" id="ev">
+      <g font-family="IBM Plex Mono" font-size="70" fill="#5b6474">
+        <line x1="0" y1="2759" x2="3400" y2="2759" stroke="#1d2430" stroke-width="10"/>
+        <line x1="0" y1="0" x2="3400" y2="0" stroke="#1d2430" stroke-width="6" stroke-dasharray="30 20"/>
+        <text x="3420" y="40">потолок 2759</text>
+      </g>
+      <g transform="translate(0,2759) scale(1,-1)">
+        <!-- plinth -->
+        <rect x="0" y="0" width="2800" height="100" fill="#3a3a3a"/>
+        <!-- bases -->
+        <rect class="pf" x="0" y="100" width="596" height="772" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <rect x="0" y="100" width="596" height="772" fill="#fff" opacity=".0"/>
+        <rect x="600" y="100" width="596" height="772" fill="#dfe1e3" stroke="#1d2430" stroke-width="6"/>
+        <rect class="pf" x="1200" y="100" width="596" height="772" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <circle cx="1498" cy="480" r="190" fill="#f4f4f4" stroke="#1d2430" stroke-width="10"/><circle cx="1498" cy="480" r="120" fill="#2a2d33"/>
+        <rect class="pf" x="1800" y="100" width="596" height="140" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <rect x="1820" y="250" width="556" height="600" fill="#f4f4f4" stroke="#1d2430" stroke-width="6"/><rect x="1880" y="330" width="436" height="300" fill="#2a2d33" opacity=".85"/>
+        <rect class="pf" x="2400" y="100" width="396" height="250" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <rect class="pf" x="2400" y="350" width="396" height="260" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <rect class="pf" x="2400" y="610" width="396" height="262" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <!-- countertop -->
+        <rect class="ct" x="0" y="872" width="2800" height="38" fill="#8a7a66"/>
+        <!-- backsplash zone -->
+        <rect x="0" y="910" width="2800" height="590" fill="#ffffff" opacity=".55"/>
+        <!-- hob -->
+        <rect x="1860" y="910" width="480" height="14" fill="#1d2430"/>
+        <!-- uppers -->
+        <rect class="pf" x="0" y="1500" width="596" height="720" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <rect class="pf" x="600" y="1500" width="596" height="720" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <rect class="pf" x="1200" y="1500" width="596" height="720" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <rect x="1800" y="1500" width="596" height="300" fill="#c7c9cc" stroke="#1d2430" stroke-width="6"/>
+        <rect class="pf" x="1800" y="1800" width="596" height="420" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <rect class="pf" x="2400" y="1500" width="396" height="720" fill="#e9e4da" stroke="#1d2430" stroke-width="6"/>
+        <!-- mezzanine -->
+        <rect class="pf" x="0" y="2220" width="2796" height="520" fill="#e9e4da" stroke="#1d2430" stroke-width="6" opacity=".9"/>
+        <!-- tall: microwave column -->
+        <rect class="pt" x="2800" y="100" width="600" height="2640" fill="#c9bfae" stroke="#1d2430" stroke-width="6"/>
+        <rect x="2860" y="1250" width="480" height="300" fill="#2a2d33"/>
+        <!-- handles -->
+        <g fill="#1d2430"><rect x="200" y="840" width="200" height="12"/><rect x="1400" y="840" width="200" height="12"/><rect x="2500" y="330" width="200" height="10"/><rect x="2500" y="590" width="200" height="10"/><rect x="2500" y="850" width="200" height="10"/></g>
+      </g>
+      <g font-family="IBM Plex Mono" font-size="64" fill="#1d2430" text-anchor="middle">
+        <g font-size="52"><text x="298" y="2620">угол</text><text x="898" y="2620">ПММ</text><text x="1498" y="2620">стиральная</text><text x="2098" y="2620">духовка</text><text x="2598" y="2620">ящики</text></g><text x="3100" y="1700">СВЧ</text>
+        <text x="2098" y="1180" font-size="54">вытяжка</text>
+      </g>
+      <g font-family="IBM Plex Mono" font-size="60" fill="#5b6474" text-anchor="middle">
+        <text x="300" y="2880">600</text><text x="900" y="2880">600</text><text x="1500" y="2880">600</text><text x="2100" y="2880">600</text><text x="2600" y="2880">400</text><text x="3100" y="2880">600</text>
+      </g>
+    </svg>
+  </div>
+  <p class="sub" style="margin-top:12px">Холодильник LG (595 × 682) стоит следующим за колонной СВЧ, в пенале с боковинами до потолка - на развёртке не показан, чтобы не мельчить.</p>
+</div></section>
+
+<section><div class="wrap grid">
+  <div>
+    <h2>Почему так</h2>
+    <ul class="n">
+      <li>Мойка, посудомойка и стиральная машина рядом - короткие и простые коммуникации.</li>
+      <li>Между мойкой и плитой есть рабочая столешница (над стиральной) - главное место для готовки.</li>
+      <li>Холодильник и колонны в дальнем конце: со стороны зала кухня заканчивается ровной «шкафной» стеной.</li>
+      <li>Вытяжка без воздуховода спрятана в навесной шкаф - в зале не видно короба.</li>
+      <li>Антресоли до потолка: больше хранения и нет пыльной полосы над шкафами.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Что сделаю в финале</h2>
+    <ul class="n">
+      <li>План с размерами каждого модуля и привязкой выводов воды и розеток</li>
+      <li>Развёртки всех стен для мебельщика</li>
+      <li>3D-визуализация с 2-3 ракурсов в выбранных цветах</li>
+      <li>Подбор вытяжки и встраиваемой СВЧ по размерам</li>
+      <li>Доступ к датчикам на стенке 592 <span class="tag">по координатам</span></li>
+    </ul>
+  </div>
+</div></section>
+
+<footer><div class="wrap">Эскиз для обсуждения. Размеры модулей предварительные, уточняются по замеру и паспортам техники.</div></footer>
+
+<script>
+document.querySelectorAll('#sw button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#sw button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  document.querySelectorAll('.pf').forEach(r=>r.setAttribute('fill',b.dataset.f));
+  document.querySelectorAll('.pt').forEach(r=>r.setAttribute('fill',b.dataset.t));
+  document.querySelectorAll('.ct').forEach(r=>r.setAttribute('fill',b.dataset.c));
+}));
+</script>
+</body>
+</html>

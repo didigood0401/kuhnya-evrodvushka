@@ -1,0 +1,28 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Кухня в евродвушке - визуализации</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Manrope,Arial,sans-serif;background:#f1ede6;color:#1e1c19;line-height:1.5}
+.w{max-width:1240px;margin:0 auto;padding:30px 20px 50px}h1{font:600 clamp(28px,4vw,44px)/1.1 Fraunces}.l{color:#5f5a52;margin:8px 0 22px;max-width:760px}
+.hero{border-radius:20px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.12)}.hero img{width:100%;display:block}
+.g{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}@media(max-width:860px){.g{grid-template-columns:1fr}}
+figure{background:#fff;border-radius:16px;overflow:hidden}figure img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover;cursor:zoom-in;transition:transform .5s}figure:hover img{transform:scale(1.03)}
+figcaption{padding:12px 14px;font-size:14px;color:#5f5a52}figcaption b{display:block;color:#1e1c19}
+.cta{margin-top:22px;background:#1e1c19;color:#f1ede6;border-radius:16px;padding:18px 22px}.cta a{color:#f0c58f}
+dialog{border:0;padding:0;background:transparent;max-width:96vw}dialog img{max-width:96vw;max-height:92vh;border-radius:12px}dialog::backdrop{background:rgba(0,0,0,.8)}
+</style></head><body><div class="w">
+<h1>Кухня в зоне зала - лист визуализаций</h1>
+<p class="l">Так выглядит сдача по проекту: ракурсы из 3D-модели по вашему чертежу, варианты цвета, дневной и вечерний свет, узел с датчиками и план. Нажмите на картинку, чтобы увеличить.</p>
+<div class="hero"><img src="hall_oak.png" alt="Вид из зала, лён и дуб"></div>
+<div class="g">
+<figure><img src="work_oak.png" alt=""><figcaption><b>Рабочая зона</b>варочная, духовка, стиральная машина под столешницей</figcaption></figure>
+<figure><img src="hall_walnut_eve.png" alt=""><figcaption><b>Вечер · орех и терракота</b>подсветка под шкафами, тёплый свет</figcaption></figure>
+<figure><img src="work_graphite.png" alt=""><figcaption><b>Белый + графит</b>тот же проект в контрастной палитре</figcaption></figure>
+<figure><img src="sens.png" alt=""><figcaption><b>Ниша 592 с датчиками</b>распашной фасад со съёмной стенкой - доступ сохранён</figcaption></figure>
+<figure><img src="plan.png" alt=""><figcaption><b>План сверху</b>расстановка по вашему чертежу</figcaption></figure>
+<figure><img src="hall_oak.png" style="object-position:20% 50%" alt=""><figcaption><b>Пенал с холодильником</b>LG в нише - со стороны зала ровный шкаф</figcaption></figure>
+</div>
+<div class="cta">Живая 3D-модель, которую можно покрутить: <a href="../premium/">kuhnya-evrodvushka/premium</a> · план и развёртки: <a href="../">kuhnya-evrodvushka</a></div>
+</div>
+<dialog id="d"><img id="di" alt=""></dialog>
+<script>document.querySelectorAll('img').forEach(i=>{if(i.closest('dialog'))return;i.onclick=()=>{di.src=i.src;d.showModal()}});d.onclick=()=>d.close()</script>
+</body></html>
